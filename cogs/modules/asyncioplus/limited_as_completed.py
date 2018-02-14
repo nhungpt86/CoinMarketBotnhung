@@ -14,12 +14,15 @@ def limited_as_completed(coros, limit):
 
     Results may be provided in any order, as they
     become available.
+
+    Credits to andybalaam for creating this code on
+    github
     """
     futures = [
         asyncio.ensure_future(c)
         for c in islice(coros, 0, limit)
     ]
-    
+
     async def first_to_finish():
         while True:
             await asyncio.sleep(0)
