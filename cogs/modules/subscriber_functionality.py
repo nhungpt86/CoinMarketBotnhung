@@ -168,11 +168,11 @@ class SubscriberFunctionality:
             async def post_data(data_set, bot):
                 for data in limited_as_completed(data_set, 10):
                     first_post = True
-                    data = await data
-                    ch = data[0]
-                    data = data[1]
-                    channel_settings = subscriber_list[ch]
-                    if data is not None:
+                    try:
+                        data = await data
+                        ch = data[0]
+                        data = data[1]
+                        channel_settings = subscriber_list[ch]
                         if channel_settings["purge"]:
                             try:
                                 await bot.purge_from(bot.get_channel(ch),
@@ -190,6 +190,8 @@ class SubscriberFunctionality:
                                                    colour=0xFF9900)
                             await self._say_msg(channel=self.cache_channel[ch],
                                                 emb=em)
+                    except TypeError:
+                        pass
             coros = (get_data(channel, minute) for channel in self.cache_channel)
             self.bot.loop.create_task(post_data(coros, self.bot))
         except CurrencyException as e:
