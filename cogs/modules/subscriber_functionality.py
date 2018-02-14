@@ -161,6 +161,8 @@ class SubscriberFunctionality:
                 data = await self._get_live_data(channel,
                                                  channel_settings,
                                                  minute)
+                if not data:
+                    return None
                 return channel, data
 
             async def post_data(data_set, bot):
