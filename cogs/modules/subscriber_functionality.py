@@ -150,7 +150,6 @@ class SubscriberFunctionality:
         @param minute - the minute the clock is at
         """
         try:
-            logger.info("Displaying live data.")
             self._check_invalid_sub_currencies()
             subscriber_list = self.subscriber_data.copy()
             for channel in subscriber_list:
@@ -191,7 +190,6 @@ class SubscriberFunctionality:
                                                 emb=em)
             coros = (get_data(channel, minute) for channel in self.cache_channel)
             self.bot.loop.create_task(post_data(coros, self.bot))
-            logger.info("Done.")
         except CurrencyException as e:
             print("An error has occured. See error.log.")
             logger.error("CurrencyException: {}".format(str(e)))
