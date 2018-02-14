@@ -173,8 +173,11 @@ class SubscriberFunctionality:
                     channel_settings = subscriber_list[ch]
                     if data is not None:
                         if channel_settings["purge"]:
-                            await bot.purge_from(bot.get_channel(ch),
-                                                 limit=10)
+                            try:
+                                await bot.purge_from(bot.get_channel(ch),
+                                                     limit=10)
+                            except:
+                                pass
                         for msg in data:
                             if first_post:
                                 em = discord.Embed(title="Live Currency Update",
